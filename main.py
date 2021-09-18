@@ -7,6 +7,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 class MainApp(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        # TODO: the self.current heading should be assigned a string which is
+        #  the software which the user choses to see the shortcut of, after
+        #  selecting the one
         self.current_heading = None
 
     def build(self):
