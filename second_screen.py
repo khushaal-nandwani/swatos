@@ -78,12 +78,13 @@ class SecondScreen(BoxLayout):
         adder = self.scroll * 9
         index = 0 + adder
         for i in range(9):
+            # put data into button and its popup
             index += i
             temp_button = self.nine_button[index]
             temp_button.text = self.data_extracted[index][0]
             temp_popup = self.nine_popups[index]
             temp_popup.title = str(self.data_extracted[index][1])
-            # put data into button and its popup
+
 
 
 
