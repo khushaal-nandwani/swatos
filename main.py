@@ -5,6 +5,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 
 class MainApp(App):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.current_heading = None
 
     def build(self):
 
