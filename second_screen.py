@@ -138,4 +138,3 @@ class SecondScreen(BoxLayout):
             inside_box.add_widget(Label())
 
             self.add_widget(inside_box)
-            print(self.data_extracted)
