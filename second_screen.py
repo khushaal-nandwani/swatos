@@ -1,3 +1,4 @@
+from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -10,81 +11,95 @@ class SecondScreen(BoxLayout):
         self.orientation = 'vertical'
         self.main_app = main_app
         self.scroll = 0
-
         heading = main_app.current_heading
+        self.current_popup_number = None
+        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
+        self._keyboard.bind(on_key_down=self._on_keyboard_down)
+
+
 
         heading_widget = Label(text="Sublime Text")
         self.add_widget(heading_widget)
 
-
-        self.popup1 = Popup(Title="the shortcut", auto_dismiss=False)
-        self.popup2 = Popup(Title="the shortcut")
-        self.popup3 = Popup(Title="the shortcut")
-        self.popup4 = Popup(Title="the shortcut")
-        self.popup5 = Popup(Title="the shortcut")
-        self.popup6 = Popup(Title="the shortcut")
-        self.popup7 = Popup(Title="the shortcut")
-        self.popup8 = Popup(Title="the shortcut")
-        self.popup9 = Popup(Title="the shortcut")
-
-        self.button1 = Button(text='First')
-        self.button2 = Button(text='Second')
-        self.button3 = Button(text='Third')
-        self.button4 = Button(text='Fourth')
-        self.button5 = Button(text='Five')
-        self.button6 = Button(text='Six')
-        self.button7 = Button(text='Seven')
-        self.button8 = Button(text='Huit')
-        self.button9 = Button(text='Nine')
-
-        self.nine_button = [self.button1,
-                            self.button2,
-                            self.button3,
-                            self.button4,
-                            self.button5,
-                            self.button6,
-                            self.button7,
-                            self.button8,
-                            self.button9]
-
-        self.nine_popups = [self.popup1,
-                            self.popup2,
-                            self.popup3,
-                            self.popup4,
-                            self.popup5,
-                            self.popup6,
-                            self.popup7,
-                            self.popup8,
-                            self.popup9]
+        self.data_extracted = [
+            ['New Window/Instance', ['Ctrl', 'Shift', '1']],
+            ['New Window/Instance1', ['Ctrl', 'Shift', '2']],
+            ['New Window/Instance2', ['Ctrl', 'Shift', '3']],
+            ['New Window/Instance3', ['Ctrl', 'Shift', '4']],
+            ['New Window/Instance4', ['Ctrl', 'Shift', '5']],
+            ['New Window/Instance5', ['Ctrl', 'Shift', '6']],
+            ['New Window/Instance6', ['Ctrl', 'Shift', '7']],
+            ['New Window/Instance7', ['Ctrl', 'Shift', '8']],
+            ['New Window/Instance8', ['Ctrl', 'Shift', '9']],
+        ]
 
 
-    data_extracted =  [
-        ['New Window/Instance', ['Ctrl', 'Shift', 'N']],
-        ['New Window/Instance1', ['Ctrl', 'Shift', 'N']],
-        ['New Window/Instance2', ['Ctrl', 'Shift', 'N']],
-        ['New Window/Instance3', ['Ctrl', 'Shift', 'N']],
-        ['New Window/Instance4', ['Ctrl', 'Shift', 'N']],
-        ['New Window/Instance5', ['Ctrl', 'Shift', 'N']],
-        ['New Window/Instance6', ['Ctrl', 'Shift', 'N']],
-        ['New Window/Instance7', ['Ctrl', 'Shift', 'N']],
-                        ]
+
+        self.nine_buttons = [Button(text='First'),
+                             Button(text='Second'),
+                             Button(text='Third'),
+                             Button(text='Fourth'),
+                             Button(text='Five'),
+                             Button(text='Six'),
+                             Button(text='Seven'),
+                             Button(text='Huit'),
+                             Button(text='Nine'),
+                             ]
+
+        self.nine_popups = [Popup(title="the shortcut"),
+                            Popup(title="the shortcut"),
+                            Popup(title="the shortcut"),
+                            Popup(title="the shortcut"),
+                            Popup(title="the shortcut"),
+                            Popup(title="the shortcut"),
+                            Popup(title="the shortcut"),
+                            Popup(title="the shortcut"),
+                            Popup(title="the shortcut")]
+
+        for i in range(len(self.nine_buttons) - 1):
+            inside_box = BoxLayout()
+            temp_button = self.nine_buttons[i]
+            temp_button.background_color = [0,0,0,0]
+            temp_button.text = self.data_extracted[i][0]
+            temp_popup = self.nine_popups[i]
+            temp_popup.size = (200, 500)
+            temp_popup.content = Label(text=str(self.data_extracted[i][1]))
+            temp_popup.size_hint = (None, None)
+            # bind the on_press event of the button to the dismiss function
+            # temp_button.bind(on_press=temp_popup.open)
+            inside_box.add_widget(Label(text=str(i+1)))
+            inside_box.add_widget(temp_button)
+            inside_box.add_widget(Label())
+            self.add_widget(inside_box)
+
+    def _keyboard_closed(self):
+        self._keyboard.unbind(on_key_down=self._on_keyboard_down)
+        self._keyboard = None
+
+    def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
+        if keycode[1] in ('escape', str(self.current_popup_number)):
+            if self.current_popup_number is not None:
+                self.nine_popups[self.current_popup_number].dismiss()
+
+        codes = [x + 1 for x in range(9)]
+        for k in codes:
+            if keycode[1] == str(k):
+                self.nine_popups[k].open()
+                self.current_popup_number = k
+        return True
+
+
 
     def extract_data(self):
         """Fetches data from the csv and assigns it
          to <data_extracted> dict"""
         # TODO: Complete this function
+        return None
 
     def add_data(self):
         adder = self.scroll * 9
         index = 0 + adder
-        for i in range(9):
-            # put data into button and its popup
-            index += i
-            temp_button = self.nine_button[index]
-            temp_button.text = self.data_extracted[index][0]
-            temp_popup = self.nine_popups[index]
-            temp_popup.title = str(self.data_extracted[index][1])
-
+        return None
 
 
 
