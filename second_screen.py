@@ -81,8 +81,8 @@ class SecondScreen(BoxLayout):
         codes = [x + 1 for x in range(9)]
         for k in codes:
             if keycode[1] == str(k):
-                self.nine_popups[k].open()
-                self.current_popup_number = k
+                self.nine_popups[k - 1].open()  # Fixed off-by-one error.
+                self.current_popup_number = k - 1
         return True
 
     def add_data(self):
