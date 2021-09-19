@@ -6,11 +6,9 @@ from kivy.core.window import Window
 from kivy.config import Config
 
 Window.size = (350, 700)
-Window.minimum_width, Window.minimum_height = Window.size
-Window.maximum_width, Window.maximum_height = Window.size
-Config.set('graphics', 'resizable', 0)
-Config.set('graphics', 'borderless', 0)
-Config.set('graphics', 'window_state', 'hidden')
+Config.set('graphics', 'position', 'auto')
+# Config.set('graphics', 'top', '5')
+Config.write()
 
 
 class MainApp(App):
