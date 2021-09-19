@@ -1,8 +1,9 @@
-from kivy.core.window import Window
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.popup import Popup
+# from kivy.core.window import Window
+# from kivy.uix.boxlayout import BoxLayout
+# from kivy.uix.button import Button
+# from kivy.uix.label import Label
+# from kivy.uix.popup import Popup
+import csv
 
 
 class SecondScreen(BoxLayout):
@@ -88,23 +89,21 @@ class SecondScreen(BoxLayout):
                 self.current_popup_number = k
         return True
 
-
-
-    def extract_data(self):
+    def extract_data():
         """Fetches data from the csv and assigns it
-         to <self.data_extracted> dict"""
-        # TODO: Complete this function
+          to <data_extracted> dict"""
+        self.data_extracted = []
+        with open('./csv-files/vscode-win.csv') as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            for row in csv_reader:
+                func = row[1]
+                keys = row[0].split('+')
+                self.data_extracted.append([func, keys])
+        self.data_extracted.pop(0)
+        # print(self.data_extracted) # testing
         return None
 
     def add_data(self):
         adder = self.scroll * 9
         index = 0 + adder
         return None
-
-
-
-
-
-
-
-
