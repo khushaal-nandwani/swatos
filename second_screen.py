@@ -22,8 +22,7 @@ class SecondScreen(BoxLayout):
         heading = main_app.current_heading
         self.current_popup_number = None
 
-        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
-        self._keyboard.bind(on_key_down=self._on_keyboard_down)
+
         self.heading_widget = Label(text=self.software, bold=True, font_size=20)
         self.add_widget(self.heading_widget)
         self.file_name = None
@@ -114,10 +113,12 @@ class SecondScreen(BoxLayout):
             self.nine_buttons[i].text = functionality
             new = make_it_plus(shortcut)
             # Fixed popup title not matching functionality chosen
-            self.nine_popups[i].title = functionality  
+            self.nine_popups[i].title = functionality
             self.nine_popups[i].content.text = new
 
     def make_data(self):
+        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
+        self._keyboard.bind(on_key_down=self._on_keyboard_down)
         if self.heading_widget.text == 'Sublime Text':
             self.file_name = 'sublime-win.csv'
         elif self.heading_widget.text == 'VScode':
