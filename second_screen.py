@@ -74,13 +74,33 @@ class SecondScreen(BoxLayout):
             except IndexError:
                 return True
 
+        # If you press esc or the same number again, you turn off the popup.
+        """
         if keycode[1] in ('escape', str(self.current_popup_number)):
             if self.current_popup_number is not None:
                 self.nine_popups[self.current_popup_number].dismiss()
+        """
+        # The previous code didn't quite work, for some reason.
+        # So, I hope I fixed it.
+        if ((keycode[1] == 'escape') or \
+            (self.current_popup_number is not None and \
+             keycode[1] == str(self.current_popup_number))):
+            self.nine_popups[self.current_popup_number - 1].dismiss()
+            self.current_popup_number = None
 
         codes = [x + 1 for x in range(9)]
         for k in codes:
             if keycode[1] == str(k):
+                """
+                If the popup screen is already popped up, you turn it off
+                then you show the new popup screen.
+                Why? Well, if you don't, to get back to the main option
+                screen, you have to either press esc many times
+                or press every single button you pressed so far but backwards.
+                And that's a bit of a pain.
+                """
+                if self.current_popup_number is not None:
+                    self.nine_popups[self.current_popup_number - 1].dismiss()
                 self.nine_popups[k - 1].open()  # Fixed off-by-one error.
                 self.current_popup_number = k
         return True
