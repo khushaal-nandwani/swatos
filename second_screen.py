@@ -92,7 +92,7 @@ class SecondScreen(BoxLayout):
 
     def extract_data(self):
         """Fetches data from the csv and assigns it
-         to <data_extracted> dict"""
+         to <self.data_extracted> dict"""
         # TODO: Complete this function
         return None
 
